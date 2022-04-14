@@ -13,7 +13,7 @@ public class SimpleController {
 		return "home"; //ielādēs home.html lapu
 	}
 	
-	@GetMapping("/msg") //Localhost:8080/simple
+	@GetMapping("/msg") //Localhost:8080/msg
 	public String msgFunc(Model model) { ///vajag lai sutitu datus no backend uz frontend
 		model.addAttribute("packet", "Ziņa no backend puses.....");
 		System.out.println("msg kontrollieries ir izsaukts");
