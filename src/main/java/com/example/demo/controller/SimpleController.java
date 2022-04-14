@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +11,12 @@ import com.example.demo.model.Product;
 
 @Controller
 public class SimpleController {
+	
+	private ArrayList<Product> allProducts = new ArrayList<Product>(
+			Arrays.asList(
+					new Product("Ķirši", 0.69f, 200), 
+					new Product("Bumbieri", 1.24f, 200), 
+					new Product("Maize", 0.99f, 150)));
 
 	@GetMapping("/simple") //Localhost:8080/simple
 	public String simpleFunc() {
@@ -28,5 +37,13 @@ public class SimpleController {
 		model.addAttribute("packet", product);
 		System.out.println("ābolu kontrollieries ir izsaukts");
 		return "product-page"; //ielādējam product-page.html lapu
+	}
+	
+	//localhost:8080/list
+	@GetMapping("/list") //Localhost:8080/object
+	public String listFunc(Model model) { 
+		model.addAttribute("packet", allProducts);
+		System.out.println("List kontrollieries ir izsaukts");
+		return "list-page"; //ielādējam product-page.html lapu
 	}
 }
