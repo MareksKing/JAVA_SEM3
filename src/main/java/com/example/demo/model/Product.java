@@ -5,7 +5,7 @@ public class Product {
 	//1.mainigie
 	private String title;
 	private float price;
-	private int quatity;
+	private int quantity;
 	
 	//2.get,set
 	public String getTitle() {
@@ -20,11 +20,11 @@ public class Product {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-	public int getQuatity() {
-		return quatity;
+	public int getQuantity() {
+		return quantity;
 	}
-	public void setQuatity(int quatity) {
-		this.quatity = quatity;
+	public void setQuantity(int quatity) {
+		this.quantity = quatity;
 	}
 	
 	//3.konstruktori
@@ -32,7 +32,7 @@ public class Product {
 		super();
 		this.title = title;
 		this.price = price;
-		this.quatity = quatity;
+		this.quantity = quatity;
 	}
 	
 	public Product() {
@@ -42,7 +42,7 @@ public class Product {
 	//4.toString
 	@Override
 	public String toString() {
-		return "Product [title=" + title + ", price=" + price + ", quatity=" + quatity + "]";
+		return "Product [title=" + title + ", price=" + price + ", quantity=" + quantity + "]";
 	}
 	
 	
