@@ -40,10 +40,12 @@ public class SimpleController {
 	}
 	
 	//localhost:8080/list
-	@GetMapping("/list") //Localhost:8080/object
+	@GetMapping("/list") //Localhost:8080/list
 	public String listFunc(Model model) { 
 		model.addAttribute("packet", allProducts);
 		System.out.println("List kontrollieries ir izsaukts");
-		return "list-page"; //ielādējam product-page.html lapu
+		return "list-page"; //ielādējam list-page.html lapu
 	}
+	
+	
 }
