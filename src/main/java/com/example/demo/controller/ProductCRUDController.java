@@ -64,4 +64,28 @@ public class ProductCRUDController {
 		//return "redirect;//product/all";
 		return "redirect:/product/all/" +prod.getID();
 	}
+	
+	@GetMapping("/update/{id}") //localhost:8080/product/update/101
+	public String updateProduct(@PathVariable(name = "id") int id, Model model) {
+		try {
+			Product temp = prodService.readByID(id);
+			model.addAttribute("packet", temp);	
+			return "update-product";
+		} catch (Exception e){
+			e.printStackTrace();
+			model.addAttribute("errorMSG", e.getMessage());
+			return "error-page";
+		}
+	}
+	@PostMapping("/update/{id}") //localhost:8080/product/add
+	public String postProductUpdate(@PathVariable(name = "id") int id, Product product) { //tukšs produkts tiek iedots HTML un šeit saņem no HTML
+		try {
+			prodService.updateByID(id, product);
+			return "redirect:/product/all/"+id;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "redirect:/product/all";
+		}
+		//return "redirect;//product/all";
+	}
 }
