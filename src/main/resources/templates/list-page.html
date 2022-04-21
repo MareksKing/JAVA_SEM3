@@ -3,10 +3,10 @@
 	<body>
 	<p>List ar produktiem</p>
 	<table>>
-	<tr th:each="produkts: ${packet}">
-    <td th:text="${produkts.getTitle()}" />
-    <td th:text="${produkts.getPrice()}" />
-    <td th:text="${produkts.getQuantity()}" />
+		<tr th:each="produkts: ${packet}">
+	    <td th:text="${produkts.getTitle()}"> </td>
+	    <td th:text="${produkts.getPrice()}"> </td>
+	    <td th:text="${produkts.getQuantity()}"> </td>
     </table>
 	</tr>
 	</body>
