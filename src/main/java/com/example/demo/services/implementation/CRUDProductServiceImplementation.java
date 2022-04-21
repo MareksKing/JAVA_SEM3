@@ -44,18 +44,56 @@ public class CRUDProductServiceImplementation implements ICRUDProductService {
 					return prod;
 				}
 			}
+			Exception exc = new Exception("Nepastāv produkts");
+			throw exc;
+			
+		} else {
+			Exception exc = new Exception("Nav pareiza ID");
+			throw exc;
 		}
+		
 	}
 
 	@Override
 	public void updateByID(int id, Product temp) throws Exception {
-		// TODO Auto-generated method stub
+		if(id >= 100) {
+			for(Product prod : allProducts) {
+				if(prod.getID() == id) {
+					
+					if(!prod.getTitle().equals(temp.getTitle())) {
+						prod.setTitle(temp.getTitle());						
+					} 
+					
+					if(temp.getPrice() != prod.getPrice()) {
+						prod.setPrice(temp.getPrice());						
+					}
+					
+					if(temp.getQuantity() != prod.getQuantity()) {
+						prod.setQuantity(temp.getQuantity());						
+					} 
+				}
+			}
+		} else {
+			Exception exc = new Exception("Nav pareiza ID");
+			throw exc;
+		}
+		
 		
 	}
 
 	@Override
 	public void deleteByID(int id) throws Exception {
-		// TODO Auto-generated method stub
+		if(id >= 100) {
+			for(Product prod : allProducts) {
+				if(prod.getID() == id) {
+					allProducts.remove(prod);
+					
+				}
+			}
+		}else {
+			Exception exc = new Exception("Nav pareiza ID");
+			throw exc;
+		}
 		
 	}
 	
