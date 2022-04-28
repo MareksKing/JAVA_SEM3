@@ -73,7 +73,7 @@ public class ProductCRUDController {
 			model.addAttribute("packet", prod);
 			return "update-product";
 		} catch (Exception e) {
-			model.addAttribute("errorMsg", e.getMessage());
+			model.addAttribute("errorMSG", e.getMessage());
 			return "error-page";//atvērs error-page.html lapu
 		}
 		
@@ -89,7 +89,7 @@ public class ProductCRUDController {
 		}
 	}
 	
-	@PostMapping("/delete/{id}")
+	@GetMapping("/delete/{id}")
 	public String deleteProductByID(@PathVariable(name = "id") int id, Model model) {
 			try {
 				prodService.deleteByID(id);
