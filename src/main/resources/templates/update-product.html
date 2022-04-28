@@ -3,15 +3,28 @@
 	<body>
 	<p>Lūdzu ievadiet jaunos produkta datus</p>
 	
-	<p th:text="${packet.getTitle()}">  </p> 
-	<p th:text="${packet.getPrice()}">  </p> 
-	<p th:text="${packet.getQuantity()}">  </p> 
-	
 	<form action = "#" th:action="@{/product/update/__${id}__}" th:object="${packet}" method="post">
 		
-		<input type="text" th:field="*{title}">
-		<input type="text" th:field="*{price}">
-		<input type="text" th:field="*{quantity}">
+		<table>
+			<tr>
+				<td> Title: </td>
+				<td> <input type="text" th:field="*{title}"> </td>
+				<td th:if="${#fields.hasErrors('title')}" th:errors="*{title}"> </td}>	
+			</tr>		
+				
+			<tr>
+				<td> Price: </td>
+				<td> <input type="text" th:field="*{price}"> </td>
+				<td th:if="${#fields.hasErrors('price')}" th:errors="*{price}"> </td}>	
+			</tr>
+				
+			<tr>
+				<td> Quantity: </td>
+				<td> <input type="text" th:field="*{quantity}"> </td>
+				<td th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"> </td}>	
+			</tr>
+				
+		</table>	
 		<button type="submit">Submit </button>
 	</form>
 	

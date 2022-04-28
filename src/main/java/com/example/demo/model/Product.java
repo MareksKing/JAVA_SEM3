@@ -15,12 +15,12 @@ public class Product {
 	@Pattern(regexp = "[A-Z]{1}[a-z]+", message="The first letter must be capital")
 	private String title;
 	
-	@Min(0)
-	@Max(1000000)
+	@Min(value = 0, message = "Price can't be smaller than 0")
+	@Max(value = 1000000, message = "Too expansive")
 	private float price;
 	
-	@Min(0)
-	@Max(1000)
+	@Min(value = 0, message = "Quantity can't be smaller than 0")
+	@Max(value = 1000, message = "Can't fit that quantity")
 	private int quantity;
 	
 	private int id = 100;

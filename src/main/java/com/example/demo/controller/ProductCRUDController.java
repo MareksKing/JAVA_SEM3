@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.validation.Valid;
 
+import org.hibernate.validator.cfg.context.ReturnValueConstraintMappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -87,14 +88,17 @@ public class ProductCRUDController {
 		
 	}
 	@PostMapping("/update/{id}") //localhost:8080/product/update/101
-	public String postProductUpdate(@PathVariable(name = "id") int id, Product product) { //tukšs produkts tiek iedots HTML un šeit saņem no HTML
+	public String postProductUpdate(@PathVariable(name = "id") int id, @Valid Product product, BindingResult result) { //tukšs produkts tiek iedots HTML un šeit saņem no HTML
+		if(!result.hasErrors()) {
 		try {
 			prodService.updateByID(id, product);
-			return "redirect:/product/all/"+id;
+			return "redirect:/product/all/"+id;				
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "redirect:/product/all";
+			}
 		}
+		return "redirect:/product/update/"+id;
 	}
 	
 	@GetMapping("/delete/{id}")
