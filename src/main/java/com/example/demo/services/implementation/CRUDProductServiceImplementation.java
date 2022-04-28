@@ -15,6 +15,9 @@ public class CRUDProductServiceImplementation implements ICRUDProductService {
 			Arrays.asList(
 					new Product("Ķirši", 0.69f, 200), 
 					new Product("Bumbieri", 1.24f, 200), 
+					new Product("Mareks", 1000.99f, 1),
+					new Product("Telefons", 5.0f, 2),
+					new Product("Orgāni", 120.00f, 15),
 					new Product("Maize", 0.99f, 150)));
 	@Override
 	public Product createProduct(Product temp) {

@@ -2,9 +2,12 @@ package com.example.demo.controller;
 
 import java.util.ArrayList;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,11 +61,16 @@ public class ProductCRUDController {
 	public String getProductAdd(Product product) {
 		return "add-product";
 	}
+	
+	
 	@PostMapping("/add") //localhost:8080/product/add
-	public String postProductAdd(Product product) { //tukšs produkts tiek iedots HTML un šeit saņem no HTML
-		Product prod = prodService.createProduct(product);
-		//return "redirect;//product/all";
-		return "redirect:/product/all/" +prod.getID();
+	public String postProductAdd(@Valid Product product, BindingResult result) { //tukšs produkts tiek iedots HTML un šeit saņem no HTML
+		if(!result.hasErrors()) {
+			Product prod = prodService.createProduct(product);
+			//return "redirect;//product/all";
+			return "redirect:/product/all/" +prod.getID();			
+		}
+		return "add-product";
 	}
 	
 	@GetMapping("/update/{id}")

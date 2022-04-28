@@ -1,11 +1,28 @@
 package com.example.demo.model;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class Product {
 
 	//1.mainigie
+	
+	@NotNull
+	@Size(min = 3, max = 30, message = "Title needs to be longer than 3 letters, but smaller than 30")
+	@Pattern(regexp = "[A-Z]{1}[a-z]+", message="The first letter must be capital")
 	private String title;
+	
+	@Min(0)
+	@Max(1000000)
 	private float price;
+	
+	@Min(0)
+	@Max(1000)
 	private int quantity;
+	
 	private int id = 100;
 	private static int counter = 0;
 	
