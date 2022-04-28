@@ -90,13 +90,13 @@ public class ProductCRUDController {
 	@PostMapping("/update/{id}") //localhost:8080/product/update/101
 	public String postProductUpdate(@PathVariable(name = "id") int id, @Valid Product product, BindingResult result) { //tukšs produkts tiek iedots HTML un šeit saņem no HTML
 		if(!result.hasErrors()) {
-		try {
-			prodService.updateByID(id, product);
-			return "redirect:/product/all/"+id;				
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "redirect:/product/all";
-			}
+			try {
+				prodService.updateByID(id, product);
+				return "redirect:/product/all/"+id;				
+			} catch (Exception e) {
+				e.printStackTrace();
+				return "redirect:/product/all";
+				}
 		}
 		return "redirect:/product/update/"+id;
 	}
@@ -108,7 +108,6 @@ public class ProductCRUDController {
 				model.addAttribute("packet", prodService.readAllProducts());
 				return "list-page";
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return "error-page";
 			}
