@@ -1,24 +1,22 @@
 package com.example.demo.services.implementation;
 
+import java.awt.image.ImageProducer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Product;
+import com.example.demo.repo.IProductRepo;
 import com.example.demo.services.ICRUDProductService;
 
 @Service
 public class CRUDProductServiceImplementation implements ICRUDProductService {
 
-	private ArrayList<Product> allProducts = new ArrayList<Product>(
-			Arrays.asList(
-					new Product("Ķirši", 0.69f, 200), 
-					new Product("Bumbieri", 1.24f, 200), 
-					new Product("Mareks", 1000.99f, 1),
-					new Product("Telefons", 5.0f, 2),
-					new Product("Orgāni", 120.00f, 15),
-					new Product("Maize", 0.99f, 150)));
+	@Autowired
+	private IProductRepo prodRepo;
+	
 	@Override
 	public Product createProduct(Product temp) {
 		for(Product prod: allProducts) {
@@ -36,24 +34,16 @@ public class CRUDProductServiceImplementation implements ICRUDProductService {
 
 	@Override
 	public ArrayList<Product> readAllProducts() {
-		return allProducts;
+		return (ArrayList<Product>) prodRepo.findAll();
 	}
 
 	@Override
 	public Product readByID(int id) throws Exception {
-		if(id >=100) {
-			for(Product prod : allProducts) {
-				if (prod.getID() == id) {
-					return prod;
-				}
-			}
-			Exception exc = new Exception("Nepastāv produkts");
-			throw exc;
-			
-		} else {
-			Exception exc = new Exception("Nav pareiza ID");
-			throw exc;
+		if (prodRepo.existsById(id)) {
+			return prodRepo.findById(id).get();
 		}
+		Exception exc = new Exception("Nepastāv produkts");
+		throw exc;
 		
 	}
 
@@ -86,16 +76,11 @@ public class CRUDProductServiceImplementation implements ICRUDProductService {
 
 	@Override
 	public void deleteByID(int id) throws Exception {
-		if(id >= 100) {
-			for(Product prod : allProducts) {
-				if(prod.getID() == id) {
-					allProducts.remove(prod);
-				}
-			}
-		}else {
-			Exception exc = new Exception("Nav pareiza ID");
-			throw exc;
+		if(prodRepo.existsById(id)) {
+			prodRepo.deleteById(id);
 		}
+		Exception exc = new Exception("Nav pareiza ID");
+		throw exc;
 		
 	}
 	
