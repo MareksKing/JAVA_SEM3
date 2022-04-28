@@ -65,19 +65,20 @@ public class ProductCRUDController {
 		return "redirect:/product/all/" +prod.getID();
 	}
 	
-	@GetMapping("/update/{id}") //localhost:8080/product/update/101
-	public String updateProduct(@PathVariable(name = "id") int id, Model model) {
+	@GetMapping("/update/{id}")
+	public String getProductUpdate(@PathVariable(name="id") int id, Model model)
+	{
 		try {
-			Product temp = prodService.readByID(id);
-			model.addAttribute("packet", temp);	
+			Product prod = prodService.readByID(id);
+			model.addAttribute("packet", prod);
 			return "update-product";
-		} catch (Exception e){
-			e.printStackTrace();
-			model.addAttribute("errorMSG", e.getMessage());
-			return "error-page";
+		} catch (Exception e) {
+			model.addAttribute("errorMsg", e.getMessage());
+			return "error-page";//atvērs error-page.html lapu
 		}
+		
 	}
-	@PostMapping("/update/{id}") //localhost:8080/product/add
+	@PostMapping("/update/{id}") //localhost:8080/product/update/101
 	public String postProductUpdate(@PathVariable(name = "id") int id, Product product) { //tukšs produkts tiek iedots HTML un šeit saņem no HTML
 		try {
 			prodService.updateByID(id, product);
@@ -86,6 +87,18 @@ public class ProductCRUDController {
 			e.printStackTrace();
 			return "redirect:/product/all";
 		}
-		//return "redirect;//product/all";
+	}
+	
+	@PostMapping("/delete/{id}")
+	public String deleteProductByID(@PathVariable(name = "id") int id, Model model) {
+			try {
+				prodService.deleteByID(id);
+				model.addAttribute("packet", prodService.readAllProducts());
+				return "list-page";
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "error-page";
+			}
 	}
 }

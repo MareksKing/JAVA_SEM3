@@ -87,7 +87,6 @@ public class CRUDProductServiceImplementation implements ICRUDProductService {
 			for(Product prod : allProducts) {
 				if(prod.getID() == id) {
 					allProducts.remove(prod);
-					
 				}
 			}
 		}else {
