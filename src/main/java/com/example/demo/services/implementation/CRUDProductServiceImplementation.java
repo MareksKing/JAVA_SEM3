@@ -19,17 +19,18 @@ public class CRUDProductServiceImplementation implements ICRUDProductService {
 	
 	@Override
 	public Product createProduct(Product temp) {
-		for(Product prod: allProducts) {
-			if(prod.getTitle().equals(temp.getTitle())&& prod.getPrice() == temp.getPrice()) {
-				int newQuantity = prod.getQuantity() + temp.getQuantity();
-				prod.setQuantity(newQuantity);
-				return prod;
-			}
+		if(prodRepo.existsByTitleAndPrice(temp.getTitle(), temp.getPrice())) {
+			Product prod = prodRepo.findByTitleAndPrice(temp.getTitle(), temp.getPrice());
+			int newQuantity = prod.getQuantity() + temp.getQuantity();
+			prod.setQuantity(newQuantity);
+			prodRepo.save(prod);
+			return prod;
+			
+		}else {
+			Product newProduct = new Product(temp.getTitle(), temp.getPrice(), temp.getQuantity());
+			Product productFromDB = prodRepo.save(newProduct);
+			return productFromDB;
 		}
-		
-		Product newProduct = new Product(temp.getTitle(), temp.getPrice(), temp.getQuantity());
-		allProducts.add(newProduct);
-		return newProduct;
 	}
 
 	@Override
@@ -49,28 +50,25 @@ public class CRUDProductServiceImplementation implements ICRUDProductService {
 
 	@Override
 	public void updateByID(int id, Product temp) throws Exception {
-		if(id >= 100) {
-			for(Product prod : allProducts) {
-				if(prod.getID() == id) {
-					
-					if(!prod.getTitle().equals(temp.getTitle())) {
-						prod.setTitle(temp.getTitle());						
-					} 
-					
-					if(temp.getPrice() != prod.getPrice()) {
-						prod.setPrice(temp.getPrice());						
-					}
-					
-					if(temp.getQuantity() != prod.getQuantity()) {
-						prod.setQuantity(temp.getQuantity());						
-					} 
+			
+			if(prodRepo.existsById(id)) {
+				Product prod = prodRepo.findById(id).get();
+				
+				if(!prod.getTitle().equals(temp.getTitle())) {
+					prod.setTitle(temp.getTitle());						
+				} 
+				
+				if(temp.getPrice() != prod.getPrice()) {
+					prod.setPrice(temp.getPrice());						
 				}
-			}
-		} else {
-			Exception exc = new Exception("Nav pareiza ID");
-			throw exc;
-		}
-		
+				
+				if(temp.getQuantity() != prod.getQuantity()) {
+					prod.setQuantity(temp.getQuantity());						
+				} 
+				prodRepo.save(prod);
+			}else {
+				throw new Exception("Produkts nepastāv");
+			} 
 		
 	}
 
@@ -78,9 +76,11 @@ public class CRUDProductServiceImplementation implements ICRUDProductService {
 	public void deleteByID(int id) throws Exception {
 		if(prodRepo.existsById(id)) {
 			prodRepo.deleteById(id);
+		} else {
+			throw new Exception("ID neeksistē");
 		}
-		Exception exc = new Exception("Nav pareiza ID");
-		throw exc;
+		
+		
 		
 	}
 	
